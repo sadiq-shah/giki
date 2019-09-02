@@ -1,0 +1,24 @@
+{
+  "name": "giki-website",
+  "version": "1.0.0",
+  "description": "\"Giki Website Revamp 4.0\"",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com/sadiq-shah/giki"
+  },
+  "keywords": [
+    "giki",
+    "website",
+    "revamp4.0",
+    "2019-2020",
+    "backend",
+    "node",
+    "sequelize"
+  ],
+  "author": "Sadiq Shah",
+  "license": "MIT"
+}
