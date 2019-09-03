@@ -34,7 +34,9 @@ module.exports = (sequelize, DataTypes) => {
     }
   }, {});
   Faculty_Member.associate = function(models) {
-    // associations can be defined here
+    Faculty_Member.belongsTo(models.Faculty, {
+      foreignKey: "faculty_id"
+    })
   };
   return Faculty_Member;
 };
