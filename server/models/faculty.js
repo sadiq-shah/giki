@@ -4,6 +4,7 @@ module.exports = (sequelize, DataTypes) => {
     name: {
       type: DataTypes.STRING,
       allowNull: String,
+      unique: true,
       validate: {
         len: [5,100]
       }
@@ -11,6 +12,7 @@ module.exports = (sequelize, DataTypes) => {
     slug: {
       type: DataTypes.STRING,
       allowNull: String,
+      unique: true,
       validate: {
         len: [5,120]
       }

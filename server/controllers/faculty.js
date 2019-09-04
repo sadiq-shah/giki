@@ -1,4 +1,6 @@
 const Faculty = require("./../models").Faculty;
+const Faculty_Member = require("./../models").Faculty_Member;
+const Faculty_Image = require("./../models").Faculty_Image;
 const messages = require("./../constants/messages");
 const statusCodes = require("./../constants/statusCodes");
 const { toSlug } = require("./../functions/helpers");
@@ -111,10 +113,51 @@ const destroy = (req,res) => {
             })
 }
 
+const retrieveFacultyMembers = (req,res) => {
+    const id = req.params.id;  
+    Faculty
+    .findOne({
+        id: id,
+        include: [{
+            model: Faculty_Member,
+            as: "faculty_members"
+        }]
+    })
+    .then(facultyMembers => {
+        res.status(statusCodes.OK).json({success: true, data: facultyMembers});
+    })
+    .catch(err => {
+        res.status(statusCodes.BAD_REQUEST).json({success: false, err: err});
+    });  
+}
+
+const retrieveFacultyImages = (req,res) => {
+    const id = req.params.id; 
+    console.log(id); 
+    Faculty
+    .findOne({
+        id: id,
+        include: [{
+            model: Faculty_Image,
+            as: "faculty_images"
+        }]
+    })
+    .then(facultyImages => {
+        console.log("Fail");
+        res.status(statusCodes.OK).json({success: true, data: facultyImages});
+    })
+    .catch(err => {
+        console.log("Failedddddddddddddd");
+        res.status(statusCodes.BAD_REQUEST).json({success: false, err: err});
+    });  
+}
+
 module.exports = {
     create,
     retrieve,
     list,
     update,
-    destroy
+    destroy,
+    retrieveFacultyMembers,
+    retrieveFacultyImages
 }
