@@ -84,11 +84,9 @@ const destroy = (req,res) => {
             res.status(statusCodes.NOT_FOUND).json({success: false, message: messages.ResourceNotFound});
         }
         else {
-            console.log("Destroying");
             facultyImage
             .destroy()
             .then(() => {
-                console.log("Inside Status");
                 res.status(statusCodes.OK).json({
                     success:true,
                     message: messages.ResourceDestroyed
