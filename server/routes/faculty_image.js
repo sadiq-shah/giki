@@ -1,10 +1,11 @@
 const Router = require("express").Router();
+const { auth } = require("./../middlewares/auth");
 const FacultyImageController = require("./../controllers").FacultyImage;
 const { methodNotAllowed } = require("./../functions/requests");
 
 Router.get("/", FacultyImageController.list);
 Router.get("/:id", FacultyImageController.retrieve);
-Router.post("/", FacultyImageController.create);
+Router.post("/", auth, FacultyImageController.create);
 Router.put("/:id", FacultyImageController.update);
 Router.delete("/:id", FacultyImageController.destroy);
 

@@ -10,7 +10,6 @@ Router.delete("/:id", FacultyMemberController.destroy);
 
 
 // For any other request method on todo items, we're going to return "Method Not Allowed"
-// For any other request method on todo items, we're going to return "Method Not Allowed"
 Router.all('/', methodNotAllowed);
 Router.all('/:id', methodNotAllowed);
 
