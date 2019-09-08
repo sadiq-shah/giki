@@ -1,4 +1,7 @@
 'use strict';
+
+const Joi = require('joi');
+
 module.exports = (sequelize, DataTypes) => {
   const Faculty_Image = sequelize.define('Faculty_Image', {
     name: {

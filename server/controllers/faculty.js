@@ -1,4 +1,5 @@
 const Faculty = require("./../models").Faculty;
+const validate = require("./../validation").Faculty;
 const Faculty_Member = require("./../models").Faculty_Member;
 const Faculty_Image = require("./../models").Faculty_Image;
 const messages = require("./../constants/messages");
@@ -6,6 +7,9 @@ const statusCodes = require("./../constants/statusCodes");
 const { toSlug } = require("./../functions/helpers");
 
 const create = (req,res) => {
+    const {error} = validate(req.body);
+    if(error) return res.status(statusCodes.BAD_REQUEST).send(error.details[0].message);
+
     Faculty.create({
         ...req.body,
         slug: toSlug(req.body.name)
@@ -55,6 +59,9 @@ const update = (req,res) => {
                     res.status(statusCodes.NOT_FOUND).json({success: true, message: messages.ResourceNotFound});
                 }
                 else {
+                    const {error} = validate(req.body);
+                    if(error) return res.status(statusCodes.BAD_REQUEST).send(error.details[0].message);
+
                     faculty.update(
                         req.body,{
                         fields: Object.keys(req.body)

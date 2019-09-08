@@ -1,10 +1,14 @@
 const _ = require("lodash");
 const User = require("./../models").User;
+const validate = require("./../validation").User;
 const messages = require("./../constants/messages");
 const statusCodes = require("./../constants/statusCodes");
 const { hashPassword, passwordValidity, generateToken } = require("./../functions/helpers");
 
 const create = async (req,res) => {
+    const {error} = validate(req.body);
+    if(error) return res.status(statusCodes.BAD_REQUEST).send(error.details[0].message);
+
     req.body.password = await hashPassword(req.body.password);
     User.create({
         ...req.body
@@ -48,6 +52,9 @@ const list = (req,res) => {
 }
 
 const login = (req,res) => {
+    const {error} = validate(req.body);
+    if(error) return res.status(statusCodes.BAD_REQUEST).send(error.details[0].message);
+
     User
     .findOne({
         where: {email: req.body.email}
@@ -81,6 +88,9 @@ const update = (req,res) => {
             res.status(statusCodes.NOT_FOUND).json({success: false, message: messages.ResourceNotFound});
         }
         else {
+            const {error} = validate(req.body);
+            if(error) return res.status(statusCodes.BAD_REQUEST).send(error.details[0].message);
+            
             user.update( req.body,{fields: Object.keys(req.body) })
             .then(() => {
                 res.status(statusCodes.OK).json({

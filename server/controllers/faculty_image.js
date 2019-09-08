@@ -1,8 +1,12 @@
 const FacultyImage = require("./../models").Faculty_Image;
+const validate = require("./../validation").Faculty_Image;
 const statusCodes = require("./../constants/statusCodes");
 const messages = require("./../constants/messages");
 
 const create = (req,res) => {
+    const {error} = validate(req.body);
+    if(error) return res.status(statusCodes.BAD_REQUEST).send(error.details[0].message);
+
     FacultyImage.create({
         ...req.body
     })
@@ -51,6 +55,9 @@ const update = (req,res) => {
             res.status(statusCodes.NOT_FOUND).json({success: true, message: messages.ResourceNotFound});
         }
         else {
+            const {error} = validate(req.body);
+            if(error) return res.status(statusCodes.BAD_REQUEST).send(error.details[0].message);
+
             facultyImage.update( req.body,{fields: Object.keys(req.body) })
             .then(() => {
                 res.status(statusCodes.OK).json({
