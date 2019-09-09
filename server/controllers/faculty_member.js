@@ -4,7 +4,7 @@ const messages = require("./../constants/messages");
 const statusCodes = require("./../constants/statusCodes");
 
 const create = (req,res) => {
-    const {error} = validate(req.body);
+    const {error} = validate(req.body, false);
     if(error) return res.status(statusCodes.BAD_REQUEST).json({success: false, err: error.details[0].message});
 
     FacultyMember.create({
@@ -50,7 +50,7 @@ const list = (req,res) => {
 
 const update = (req,res) => {
 
-    const {error} = validate(req.body);
+    const {error} = validate(req.body, true);
     if(error) return res.status(statusCodes.BAD_REQUEST).json({success: false, err: error.details[0].message});
 
     const id = req.params.id;

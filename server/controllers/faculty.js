@@ -7,13 +7,13 @@ const statusCodes = require("./../constants/statusCodes");
 const { toSlug } = require("./../functions/helpers");
 
 const create = (req,res) => {
-    const {error} = validate(req.body);
+    const {error} = validate(req.body, false);
     if(error) return res.status(statusCodes.BAD_REQUEST).json({success:false, err: error.details[0].message});
 
     Faculty.create({
         ...req.body,
         slug: toSlug(req.body.name)
-    })
+    })  
     .then(faculty => {
         res.status(statusCodes.CREATED).json({success: true, message: messages.ResourceCreated, data: faculty});
     })
@@ -53,7 +53,7 @@ const list = (req,res) => {
 
 const update = (req,res) => {
 
-    const {error} = validate(req.body);
+    const {error} = validate(req.body, true);
     if(error) return res.status(statusCodes.BAD_REQUEST).json({success: false, err: error.details[0].message});
 
     const id = req.params.id;

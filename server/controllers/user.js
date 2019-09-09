@@ -6,7 +6,7 @@ const statusCodes = require("./../constants/statusCodes");
 const { hashPassword, passwordValidity, generateToken } = require("./../functions/helpers");
 
 const create = async (req,res) => {
-    const {error} = validate(req.body);
+    const {error} = validate(req.body, false);
     if(error) return res.status(statusCodes.BAD_REQUEST).json({success: false, err: error.details[0].message});
 
     req.body.password = await hashPassword(req.body.password);
@@ -52,7 +52,7 @@ const list = (req,res) => {
 }
 
 const login = (req,res) => {
-    const {error} = validate(req.body);
+    const {error} = validate(req.body, false);
     if(error) return res.status(statusCodes.BAD_REQUEST).json({success: false, err: error.details[0].message});
 
     User
@@ -81,7 +81,7 @@ const login = (req,res) => {
 
 const update = (req,res) => {
 
-    const {error} = validate(req.body);
+    const {error} = validate(req.body, true);
     if(error) return res.status(statusCodes.BAD_REQUEST).json({success: false, err: error.details[0].message});
 
     const id = req.params.id;
