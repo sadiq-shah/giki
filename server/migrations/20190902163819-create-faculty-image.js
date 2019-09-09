@@ -12,14 +12,13 @@ module.exports = {
         type: Sequelize.STRING
       },
       faculty_id: {
-        type: {
-          type: Sequelize.INTEGER,
-          references: {
-            model: "Faculty",
-            key: "id",
-            as: "faculty_id"
-          }
-        }
+        type:  Sequelize.INTEGER,
+          // references: {
+          //   model: "Faculty",
+          //   key: "id",
+          //   as: "faculty_id"
+          // }
+        
       },
       createdAt: {
         allowNull: false,
