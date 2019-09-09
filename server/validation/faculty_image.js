@@ -1,6 +1,6 @@
 const Joi = require('joi');
 
-module.exports = function validate(faculty_image) {
+module.exports = (faculty_image) => {
     const schema = {
       name: Joi.string().required(),
       faculty_id: Joi.number().required(),

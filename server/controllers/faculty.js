@@ -8,7 +8,7 @@ const { toSlug } = require("./../functions/helpers");
 
 const create = (req,res) => {
     const {error} = validate(req.body);
-    if(error) return res.status(statusCodes.BAD_REQUEST).send(error.details[0].message);
+    if(error) return res.status(statusCodes.BAD_REQUEST).json({success:false, err: error.details[0].message});
 
     Faculty.create({
         ...req.body,
@@ -52,6 +52,10 @@ const list = (req,res) => {
 }
 
 const update = (req,res) => {
+
+    const {error} = validate(req.body);
+    if(error) return res.status(statusCodes.BAD_REQUEST).json({success: false, err: error.details[0].message});
+
     const id = req.params.id;
     Faculty.findByPk(id)
             .then(faculty => {
@@ -59,8 +63,6 @@ const update = (req,res) => {
                     res.status(statusCodes.NOT_FOUND).json({success: true, message: messages.ResourceNotFound});
                 }
                 else {
-                    const {error} = validate(req.body);
-                    if(error) return res.status(statusCodes.BAD_REQUEST).send(error.details[0].message);
 
                     faculty.update(
                         req.body,{

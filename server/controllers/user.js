@@ -7,7 +7,7 @@ const { hashPassword, passwordValidity, generateToken } = require("./../function
 
 const create = async (req,res) => {
     const {error} = validate(req.body);
-    if(error) return res.status(statusCodes.BAD_REQUEST).send(error.details[0].message);
+    if(error) return res.status(statusCodes.BAD_REQUEST).json({success: false, err: error.details[0].message});
 
     req.body.password = await hashPassword(req.body.password);
     User.create({
@@ -53,7 +53,7 @@ const list = (req,res) => {
 
 const login = (req,res) => {
     const {error} = validate(req.body);
-    if(error) return res.status(statusCodes.BAD_REQUEST).send(error.details[0].message);
+    if(error) return res.status(statusCodes.BAD_REQUEST).json({success: false, err: error.details[0].message});
 
     User
     .findOne({
@@ -80,6 +80,10 @@ const login = (req,res) => {
 }
 
 const update = (req,res) => {
+
+    const {error} = validate(req.body);
+    if(error) return res.status(statusCodes.BAD_REQUEST).json({success: false, err: error.details[0].message});
+
     const id = req.params.id;
     User
     .findByPk(id)
@@ -88,8 +92,6 @@ const update = (req,res) => {
             res.status(statusCodes.NOT_FOUND).json({success: false, message: messages.ResourceNotFound});
         }
         else {
-            const {error} = validate(req.body);
-            if(error) return res.status(statusCodes.BAD_REQUEST).send(error.details[0].message);
             
             user.update( req.body,{fields: Object.keys(req.body) })
             .then(() => {

@@ -1,6 +1,6 @@
 const Joi = require('joi');
 
-module.exports = function validate(faculty_member) {
+module.exports = (faculty_member) => {
     const schema = {
       email: Joi.string().min(5).max(255).required().email(),
       password: Joi.string().min(5).max(255).required(),

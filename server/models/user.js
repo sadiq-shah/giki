@@ -1,7 +1,5 @@
 'use strict';
 
-const Joi = require('joi');
-
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define('User', {
     name: {
