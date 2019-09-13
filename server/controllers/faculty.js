@@ -1,4 +1,5 @@
 const Faculty = require("./../models").Faculty;
+const validate = require("./../validation").Faculty;
 const Faculty_Member = require("./../models").Faculty_Member;
 const Faculty_Image = require("./../models").Faculty_Image;
 const messages = require("./../constants/messages");
@@ -6,10 +7,13 @@ const statusCodes = require("./../constants/statusCodes");
 const { toSlug } = require("./../functions/helpers");
 
 const create = (req,res) => {
+    const {error} = validate(req.body, false);
+    if(error) return res.status(statusCodes.BAD_REQUEST).json({success:false, err: error.details[0].message});
+
     Faculty.create({
         ...req.body,
         slug: toSlug(req.body.name)
-    })
+    })  
     .then(faculty => {
         res.status(statusCodes.CREATED).json({success: true, message: messages.ResourceCreated, data: faculty});
     })
@@ -48,6 +52,10 @@ const list = (req,res) => {
 }
 
 const update = (req,res) => {
+
+    const {error} = validate(req.body, true);
+    if(error) return res.status(statusCodes.BAD_REQUEST).json({success: false, err: error.details[0].message});
+
     const id = req.params.id;
     Faculty.findByPk(id)
             .then(faculty => {
@@ -55,6 +63,7 @@ const update = (req,res) => {
                     res.status(statusCodes.NOT_FOUND).json({success: true, message: messages.ResourceNotFound});
                 }
                 else {
+
                     faculty.update(
                         req.body,{
                         fields: Object.keys(req.body)
