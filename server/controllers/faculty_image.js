@@ -1,8 +1,12 @@
 const FacultyImage = require("./../models").Faculty_Image;
+const validate = require("./../validation").Faculty_Image;
 const statusCodes = require("./../constants/statusCodes");
 const messages = require("./../constants/messages");
 
 const create = (req,res) => {
+    const {error} = validate(req.body, false);
+    if(error) return res.status(statusCodes.BAD_REQUEST).json({success: false, err: error.details[0].message});
+
     FacultyImage.create({
         ...req.body
     })
@@ -43,6 +47,10 @@ const list = (req,res) => {
 }
 
 const update = (req,res) => {
+
+    const {error} = validate(req.body, true);
+    if(error) return res.status(statusCodes.BAD_REQUEST).json({success: false, err: error.details[0].message});
+
     const id = req.params.id;
     FacultyImage
     .findByPk(id)
@@ -51,6 +59,7 @@ const update = (req,res) => {
             res.status(statusCodes.NOT_FOUND).json({success: true, message: messages.ResourceNotFound});
         }
         else {
+
             facultyImage.update( req.body,{fields: Object.keys(req.body) })
             .then(() => {
                 res.status(statusCodes.OK).json({

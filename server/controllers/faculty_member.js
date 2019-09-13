@@ -1,8 +1,12 @@
 const FacultyMember = require("./../models").Faculty_Member;
+const validate = require("./../validation").Faculty_Member;
 const messages = require("./../constants/messages");
 const statusCodes = require("./../constants/statusCodes");
 
 const create = (req,res) => {
+    const {error} = validate(req.body, false);
+    if(error) return res.status(statusCodes.BAD_REQUEST).json({success: false, err: error.details[0].message});
+
     FacultyMember.create({
         ...req.body
     })
@@ -45,6 +49,10 @@ const list = (req,res) => {
 }
 
 const update = (req,res) => {
+
+    const {error} = validate(req.body, true);
+    if(error) return res.status(statusCodes.BAD_REQUEST).json({success: false, err: error.details[0].message});
+
     const id = req.params.id;
     FacultyMember
     .findByPk(id)
@@ -53,6 +61,7 @@ const update = (req,res) => {
             res.status(statusCodes.NOT_FOUND).json({success: true, message: messages.ResourceNotFound});
         }
         else {
+            
             facultyMembers.update( req.body,{fields: Object.keys(req.body) })
             .then(() => {
                 res.status(statusCodes.OK).json({
