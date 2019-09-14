@@ -4,6 +4,7 @@ const FacultyImage = require("./faculty_image");
 const UserController = require("./user");
 const Page = require("./page");
 const PageTags = require("./page_tags");
+const Article = require("./article");
 const CourseController = require("./course");
    
 module.exports = {
@@ -13,5 +14,6 @@ module.exports = {
     UserController,
     Page,
     PageTags,
+    Article,
     CourseController
 }

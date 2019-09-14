@@ -1,5 +1,5 @@
-const PageTags = require("./../models").Page_Tags;
-const validate = require("./../validation").Page_Tags;
+const Article = require("./../models").Article;
+const validate = require("./../validation").Article;
 const statusCodes = require("./../constants/statusCodes");
 const messages = require("./../constants/messages");
 
@@ -7,11 +7,11 @@ const create = (req,res) => {
     const {error} = validate(req.body, false);
     if(error) return res.status(statusCodes.BAD_REQUEST).json({success: false, err: error.details[0].message});
 
-    PageTags.create({
+    Article.create({
         ...req.body
     })
-    .then(pagetags => {
-        res.status(statusCodes.CREATED).json({success: true, message: messages.ResourceCreated, data: pagetags});
+    .then(article => {
+        res.status(statusCodes.CREATED).json({success: true, message: messages.ResourceCreated, data: article});
     })
     .catch(err => {
         res.status(statusCodes.BAD_REQUEST).json({success:true, err:err});
@@ -20,14 +20,14 @@ const create = (req,res) => {
 
 const retrieve = (req,res) => {
     const id = req.params.id;
-    PageTags
+    Article
     .findByPk(id)
-    .then(pagetags => {
-        if(!pagetags) {
+    .then(article => {
+        if(!article) {
             res.status(statusCodes.NOT_FOUND).json({success:true, message: messages.ResourceNotFound})
         }
         else {
-            res.status(statusCodes.OK).json({success:true, data: pagetags});
+            res.status(statusCodes.OK).json({success:true, data: article});
         }
     })
     .catch(err => {
@@ -36,10 +36,10 @@ const retrieve = (req,res) => {
 }
 
 const list = (req,res) => {
-    PageTags
+    Article
     .findAll()
-    .then(pagetags => {
-        res.status(statusCodes.OK).json({ success:true, data: pagetags });
+    .then(articles => {
+        res.status(statusCodes.OK).json({ success:true, data: articles });
     })
     .catch((err) => {
         res.status(statusCodes.BAD_REQUEST).json({success:false,err:err});
@@ -52,20 +52,20 @@ const update = (req,res) => {
     if(error) return res.status(statusCodes.BAD_REQUEST).json({success: false, err: error.details[0].message});
 
     const id = req.params.id;
-    PageTags
+    Article
     .findByPk(id)
-    .then(pagetag => {
-        if(!pagetag) {
+    .then(article => {
+        if(!article) {
             res.status(statusCodes.NOT_FOUND).json({success: true, message: messages.ResourceNotFound});
         }
         else {
 
-            pagetag.update( req.body,{fields: Object.keys(req.body) })
+            article.update( req.body,{fields: Object.keys(req.body) })
             .then(() => {
                 res.status(statusCodes.OK).json({
                     success: true,
                     message: messages.ResourceUpdated,
-                    data: pagetags
+                    data: article
                 })
             })
             .catch((err) => {
@@ -86,14 +86,14 @@ const update = (req,res) => {
 
 const destroy = (req,res) => {
     const id = req.params.id;
-    PageTags
+    Article
     .findByPk(id)
-    .then(pagetag => {
-        if(!pagetag) {
+    .then(article => {
+        if(!article) {
             res.status(statusCodes.NOT_FOUND).json({success: false, message: messages.ResourceNotFound});
         }
         else {
-            pagetag
+            article
             .destroy()
             .then(() => {
                 res.status(statusCodes.OK).json({
