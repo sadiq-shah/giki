@@ -54,13 +54,13 @@ const update = (req,res) => {
     const id = req.params.id;
     PageTags
     .findByPk(id)
-    .then(pagetags => {
-        if(!pagetags) {
+    .then(pagetag => {
+        if(!pagetag) {
             res.status(statusCodes.NOT_FOUND).json({success: true, message: messages.ResourceNotFound});
         }
         else {
 
-            pagetags.update( req.body,{fields: Object.keys(req.body) })
+            pagetag.update( req.body,{fields: Object.keys(req.body) })
             .then(() => {
                 res.status(statusCodes.OK).json({
                     success: true,
@@ -89,11 +89,11 @@ const destroy = (req,res) => {
     PageTags
     .findByPk(id)
     .then(pagetags => {
-        if(!pagetags) {
+        if(!pagetag) {
             res.status(statusCodes.NOT_FOUND).json({success: false, message: messages.ResourceNotFound});
         }
         else {
-            pagetags
+            pagetag
             .destroy()
             .then(() => {
                 res.status(statusCodes.OK).json({
