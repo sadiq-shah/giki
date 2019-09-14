@@ -88,7 +88,7 @@ const destroy = (req,res) => {
     const id = req.params.id;
     PageTags
     .findByPk(id)
-    .then(pagetags => {
+    .then(pagetag => {
         if(!pagetag) {
             res.status(statusCodes.NOT_FOUND).json({success: false, message: messages.ResourceNotFound});
         }
