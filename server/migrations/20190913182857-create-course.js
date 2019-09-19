@@ -14,6 +14,15 @@ module.exports = {
       code: {
         type: Sequelize.STRING
       },
+      faculty_id: {
+        type: Sequelize.INTEGER,
+        onDelete: "CASCADE",
+        allowNull: false,
+        references: {
+          model: "Faculties",
+          key: "id",
+        }
+      },
       description: {
         type: Sequelize.TEXT
       },

@@ -9,7 +9,22 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       course_id: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        onDelete: "CASCADE",
+        allowNull: false,
+        references: {
+          model: "Courses",
+          key: "id",
+        }
+      },
+      course_coreq_id: {
+        type: Sequelize.INTEGER,
+        onDelete: "CASCADE",
+        allowNull: false,
+        references: {
+          model: "Courses",
+          key: "id",
+        }
       },
       createdAt: {
         allowNull: false,

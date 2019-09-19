@@ -6,7 +6,8 @@ const { toSlug } = require("../functions/helpers");
 const create = (req, res) => {
     console.log(req.body),
         coursePreReq.create({
-            course_id: req.body.id,
+            course_id: req.params.courseid,
+            course_prereq_id: req.body.course_prereq_id
         }).then(cpr => {
             res.status(200).send(cpr);
         })
@@ -17,7 +18,13 @@ const create = (req, res) => {
 
 const retrieve = (req, res) => {
     const id = req.params.id;
-    coursePreReq.findByPk(id)
+    const courseid = req.params.courseid;
+    coursePreReq.find({
+        where: {
+            id: id,
+            course_id: courseid
+        }
+    })
         .then(course => {
             if (!course) {
                 res.status(statusCodes.NOT_FOUND).json({ success: true, message: messages.ResourceNotFound })
@@ -45,11 +52,17 @@ const list = (req, res) => {
 
 const update = (req, res) => {
     const id = req.params.id;
+    const courseid = req.params.courseid;
     console.log(id);
-    coursePreReq.findByPk(id)
+    coursePreReq.findOne({
+        where: {
+            id: id,
+            course_id: courseid
+        }
+    })
         .then(course => {
             course.update({
-                    course_id: req.body.id,
+                    course_id: req.body.course_id,
                 }).then(cpr => {
                     res.status(200).send(cpr);
                 })
@@ -67,14 +80,20 @@ const update = (req, res) => {
 
 const destroy = (req, res) => {
     const id = req.params.id;
-    coursePreReq.findByPk(id)
+    const courseid = req.params.courseid;
+    coursePreReq.findOne({
+        where: {
+            id: id,
+            course_id: courseid
+        }
+    })
         .then(course => {
             if (!course) {
                 res.status(statusCodes.NOT_FOUND).json({ success: false, message: messages.ResourceNotFound });
             } else {
                 course.destroy()
                     .then(() => {
-                        res.status(statusCodes.Ok).json({
+                        res.status(statusCodes.OK).json({
                             success: true,
                             message: messages.ResourceDestroyed
                         })
