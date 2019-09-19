@@ -28,6 +28,12 @@ module.exports = {
       },
       faculty_id: {
           type: Sequelize.INTEGER,
+          onDelete: "CASCADE",
+          allowNull: false,
+          references: {
+            model: "Faculties",
+            key: "id",
+          }
       },
       createdAt: {
         allowNull: false,

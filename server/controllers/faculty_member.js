@@ -7,6 +7,7 @@ const create = (req,res) => {
     const {error} = validate(req.body, false);
     if(error) return res.status(statusCodes.BAD_REQUEST).json({success: false, err: error.details[0].message});
 
+    req.body.faculty_id = req.params.facultyId;
     FacultyMember.create({
         ...req.body
     })
@@ -54,6 +55,7 @@ const update = (req,res) => {
     if(error) return res.status(statusCodes.BAD_REQUEST).json({success: false, err: error.details[0].message});
 
     const id = req.params.id;
+    req.body.faculty_id = req.params.facultyId;
     FacultyMember
     .findByPk(id)
     .then(facultyMembers => {
@@ -61,7 +63,6 @@ const update = (req,res) => {
             res.status(statusCodes.NOT_FOUND).json({success: true, message: messages.ResourceNotFound});
         }
         else {
-            
             facultyMembers.update( req.body,{fields: Object.keys(req.body) })
             .then(() => {
                 res.status(statusCodes.OK).json({

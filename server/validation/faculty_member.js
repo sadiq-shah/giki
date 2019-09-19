@@ -8,11 +8,10 @@ module.exports = (faculty_member, update) => {
       designation: Joi.string().required(),
       contact_details: Joi.string(),
       faculty_status: Joi.string(),
-      faculty_id: Joi.number().required()
     });
 
     if(update) {
-      schema = schema.optionalKeys("email", "password", "name", "designation", "faculty_id");
+      schema = schema.optionalKeys("email", "password", "name", "designation");
     }
   
     return Joi.validate(faculty_member, schema);

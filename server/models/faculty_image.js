@@ -11,10 +11,13 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     }
   }, {});
+
   Faculty_Image.associate = function(models) {
     Faculty_Image.belongsTo(models.Faculty, {
-      foreignKey: "faculty_id"
+      foreignKey: "faculty_id",
+      as: "Faculty"
     })
   };
+
   return Faculty_Image;
 };

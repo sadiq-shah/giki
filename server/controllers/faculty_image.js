@@ -7,6 +7,7 @@ const create = (req,res) => {
     const {error} = validate(req.body, false);
     if(error) return res.status(statusCodes.BAD_REQUEST).json({success: false, err: error.details[0].message});
 
+    req.body.faculty_id = req.params.facultyId;
     FacultyImage.create({
         ...req.body
     })
@@ -52,6 +53,7 @@ const update = (req,res) => {
     if(error) return res.status(statusCodes.BAD_REQUEST).json({success: false, err: error.details[0].message});
 
     const id = req.params.id;
+    req.body.faculty_id = req.params.facultyId;
     FacultyImage
     .findByPk(id)
     .then(facultyImage => {
@@ -86,6 +88,7 @@ const update = (req,res) => {
 
 const destroy = (req,res) => {
     const id = req.params.id;
+    console.log(`Id=${id}`);
     FacultyImage
     .findByPk(id)
     .then(facultyImage => {
