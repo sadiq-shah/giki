@@ -36,7 +36,8 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
   Faculty_Member.associate = function(models) {
     Faculty_Member.belongsTo(models.Faculty, {
-      foreignKey: "faculty_id"
+      foreignKey: "faculty_id",
+      as: "faculty_members"
     })
   };
   return Faculty_Member;

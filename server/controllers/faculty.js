@@ -123,10 +123,10 @@ const destroy = (req,res) => {
 }
 
 const retrieveFacultyMembers = (req,res) => {
-    const id = req.params.id;  
+    const id = req.params.facultyId;  
+    console.log(`Id = ${id}`);  
     Faculty
-    .findOne({
-        id: id,
+    .findByPk(id,{
         include: [{
             model: Faculty_Member,
             as: "faculty_members"
