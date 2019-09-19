@@ -20,7 +20,6 @@ Router.delete("/:facultyId/members/:id", FacultyMemberController.destroy);
 
 
 Router.get("/:id/images/", FacultyController.retrieveFacultyImages);
-Router.get("/:facultyId/images/", FacultyImageController.list);
 Router.get("/:facultyId/images/:id", FacultyImageController.retrieve);
 Router.post("/:facultyId/images/", FacultyImageController.create);
 Router.put("/:facultyId/images/:id", FacultyImageController.update);

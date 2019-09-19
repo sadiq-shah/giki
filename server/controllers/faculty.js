@@ -141,8 +141,7 @@ const retrieveFacultyMembers = (req,res) => {
 }
 
 const retrieveFacultyImages = (req,res) => {
-    const id = req.params.id; 
-    console.log(id); 
+    const id = req.params.id;  
     Faculty
     .findOne({
         id: id,
@@ -152,11 +151,9 @@ const retrieveFacultyImages = (req,res) => {
         }]
     })
     .then(facultyImages => {
-        console.log("Fail");
         res.status(statusCodes.OK).json({success: true, data: facultyImages});
     })
     .catch(err => {
-        console.log("Failedddddddddddddd");
         res.status(statusCodes.BAD_REQUEST).json({success: false, err: err});
     });  
 }

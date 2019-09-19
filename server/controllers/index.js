@@ -8,7 +8,7 @@ const Page = require("./page");
 const PageTags = require("./page_tags");
 const Article = require("./article");
 const CourseController = require("./course");
-   
+const EventController = require("./events");   
 module.exports = {
     Faculty,
     FacultyMember,
@@ -19,5 +19,6 @@ module.exports = {
     Page,
     PageTags,
     Article,
-    CourseController
+    CourseController,
+    EventController
 }

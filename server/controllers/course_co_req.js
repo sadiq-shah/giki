@@ -74,7 +74,7 @@ const destroy = (req, res) => {
             } else {
                 course.destroy()
                     .then(() => {
-                        res.status(statusCodes.Ok).json({
+                        res.status(statusCodes.OK).json({
                             success: true,
                             message: messages.ResourceDestroyed
                         })

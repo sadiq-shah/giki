@@ -2,7 +2,7 @@ const Joi = require('joi');
 
 module.exports = (faculty_image, update) => {
     let schema = Joi.object().keys({
-      name: Joi.string().required()
+      name: Joi.string().required(), 
     });
 
     if(update) {
