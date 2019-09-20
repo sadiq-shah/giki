@@ -2,7 +2,10 @@
 module.exports = (sequelize, DataTypes) => {
     const course_pre_req = sequelize.define('course_pre_req', {
         course_id: DataTypes.INTEGER,
-        course_prereq_id: DataTypes.INTEGER
+        course_prereq_id: {
+            type: DataTypes.INTEGER,
+            allowNull: false
+        }
     }, {});
     course_pre_req.associate = function(models) {
         // associations can be defined here

@@ -2,6 +2,7 @@ const Router = require("express").Router();
 const { auth } = require("./../middlewares/auth");
 const CourseController = require("./../controllers").CourseController;
 const CoursePreReq = require("./../controllers").CoursePreReq;
+const CourseCoReq = require("./../controllers").CourseCoReq;
 const { methodNotAllowed } = require("./../functions/requests");
 
 Router.get("/", CourseController.list);
@@ -19,7 +20,10 @@ Router.delete("/:courseid/prereq/:id", CoursePreReq.destroy);
 
 
 Router.get("/:id/coreq", CourseController.retrieveCourseCoReqs);
-
+Router.get("/:courseid/coreq/:id", CourseCoReq.retrieve);
+Router.post("/:courseid/coreq/", CourseCoReq.create);
+Router.put("/:courseid/coreq/:id", CourseCoReq.update);
+Router.delete("/:courseid/coreq/:id", CourseCoReq.destroy);
 
 
 

@@ -6,18 +6,26 @@ const { toSlug } = require("../functions/helpers");
 const create = (req, res) => {
     console.log(req.body),
         courseCoReq.create({
-            course_id: req.body.id,
+            course_id: req.params.courseid,
+            course_coreq_id: req.body.course_coreq_id
         }).then(cpr => {
             res.status(200).send(cpr);
         })
         .catch(err => {
+            res.status(statusCodes.BAD_REQUEST).json({ success: false, err: err });
             console.log(err)
         })
 }
 
 const retrieve = (req, res) => {
     const id = req.params.id;
-    courseCoReq.findByPk(id)
+    const courseid = req.params.courseid;
+    courseCoReq.findOne({
+        where: {
+            id: id,
+            course_id: courseid
+        }
+    })
         .then(course => {
             if (!course) {
                 res.status(statusCodes.NOT_FOUND).json({ success: true, message: messages.ResourceNotFound })
@@ -45,16 +53,26 @@ const list = (req, res) => {
 
 const update = (req, res) => {
     const id = req.params.id;
+    const courseid = req.params.courseid;
     console.log(id);
-    courseCoReq.findByPk(id)
-        .then(course => {
-            course.update({
-                    course_id: req.body.id,
-                }).then(cpr => {
-                    res.status(200).send(cpr);
+    courseCoReq.findOne({
+        where: {
+            id: id,
+            course_id: courseid
+        }
+    })
+        .then(coursecoreq => {
+            coursecoreq.update({
+                    course_coreq_id: req.body.course_coreq_id
+                }).then(ccr => {
+                    res.status(200).send(ccr);
                 })
                 .catch(err => {
                     console.log(err)
+                    res.status(statusCodes.BAD_REQUEST).json({
+                        success: false,
+                        err: err
+                    })
                 })
         })
         .catch((err) => {
@@ -67,14 +85,20 @@ const update = (req, res) => {
 
 const destroy = (req, res) => {
     const id = req.params.id;
-    courseCoReq.findByPk(id)
+    const courseid = req.params.courseid;
+    courseCoReq.findOne({
+        where: {
+            id: id,
+            course_id: courseid
+        }
+    })
         .then(course => {
             if (!course) {
                 res.status(statusCodes.NOT_FOUND).json({ success: false, message: messages.ResourceNotFound });
             } else {
                 course.destroy()
                     .then(() => {
-                        res.status(statusCodes.Ok).json({
+                        res.status(statusCodes.OK).json({
                             success: true,
                             message: messages.ResourceDestroyed
                         })

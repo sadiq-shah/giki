@@ -12,6 +12,7 @@ const create = (req, res) => {
             res.status(200).send(cpr);
         })
         .catch(err => {
+            res.status(statusCodes.BAD_REQUEST).json({ success: false, err: err });
             console.log(err)
         })
 }
@@ -19,7 +20,7 @@ const create = (req, res) => {
 const retrieve = (req, res) => {
     const id = req.params.id;
     const courseid = req.params.courseid;
-    coursePreReq.find({
+    coursePreReq.findOne({
         where: {
             id: id,
             course_id: courseid
@@ -60,13 +61,17 @@ const update = (req, res) => {
             course_id: courseid
         }
     })
-        .then(course => {
-            course.update({
-                    course_id: req.body.course_id,
+        .then(courseprereq => {
+            courseprereq.update({
+                    course_prereq_id: req.body.course_prereq_id,
                 }).then(cpr => {
                     res.status(200).send(cpr);
                 })
                 .catch(err => {
+                    res.status(statusCodes.BAD_REQUEST).json({
+                        success: false,
+                        err: err
+                    })
                     console.log(err)
                 })
         })
