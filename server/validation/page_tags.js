@@ -6,7 +6,7 @@ module.exports = (page_tags, update) => {
     });
 
     if(update) {
-      schema = schema.optionalKeys("name", "page_id");
+      schema = schema.optionalKeys("name");
     }
   
     return Joi.validate(page_tags, schema);

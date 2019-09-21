@@ -54,7 +54,7 @@ const update = (req,res) => {
 
     const id = req.params.id;
     req.body.page_id = req.params.pageId;
-    PageTag
+    PageTags
     .findByPk(id)
     .then(pagetag => {
         if(!pagetag) {
