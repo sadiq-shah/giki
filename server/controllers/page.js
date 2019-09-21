@@ -1,4 +1,5 @@
 const Page = require("./../models").Page;
+const Page_Tags = require("./../models").Page_Tags;
 const validate = require("./../validation").Page;
 const messages = require("./../constants/messages");
 const statusCodes = require("./../constants/statusCodes");
@@ -92,32 +93,50 @@ const update = (req,res) => {
 const destroy = (req,res) => {
     const id = req.params.id;
     Page.findByPk(id)
-            .then(page => {
-                if(!page) {
-                    res.status(statusCodes.NOT_FOUND).json({success: false, message: messages.ResourceNotFound});
-                }
-                else {
-                page.destroy()
-                    .then(() => {
-                        res.status(statusCodes.Ok).json({
-                            success:true,
-                            message: messages.ResourceDestroyed
-                        })
+        .then(page => {
+            if(!page) {
+                res.status(statusCodes.NOT_FOUND).json({success: false, message: messages.ResourceNotFound});
+            }
+            else {
+            page.destroy()
+                .then(() => {
+                    res.status(statusCodes.Ok).json({
+                        success:true,
+                        message: messages.ResourceDestroyed
                     })
-                    .catch(err => {
-                        res.status(statusCodes.BAD_REQUEST).json({
-                            success: false,
-                            err: err
-                        })
-                    })
-                }
-            })
-            .catch(err => {
-                res.status(statusCodes.BAD_REQUEST).json({
-                    success: false,
-                    err: err
                 })
+                .catch(err => {
+                    res.status(statusCodes.BAD_REQUEST).json({
+                        success: false,
+                        err: err
+                    })
+                })
+            }
+        })
+        .catch(err => {
+            res.status(statusCodes.BAD_REQUEST).json({
+                success: false,
+                err: err
             })
+        })
+}
+
+const retrievePageTags = (req,res) => {
+    const id = req.params.pageId;  
+    console.log(`Id = ${id}`);
+    Page
+    .findByPk(id,{
+        include: [{
+            model: Page_Tags,
+            as: "page_tags"
+        }]
+    })
+    .then(pageTags => {
+        res.status(statusCodes.OK).json({success: true, data: pageTags});
+    })
+    .catch(err => {
+        res.status(statusCodes.BAD_REQUEST).json({success: false, err: err});
+    });  
 }
 
 module.exports = {
@@ -125,5 +144,6 @@ module.exports = {
     retrieve,
     list,
     update,
-    destroy
+    destroy,
+    retrievePageTags
 }

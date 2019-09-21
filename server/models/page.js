@@ -20,7 +20,10 @@ module.exports = (sequelize, DataTypes) => {
     }
   }, {});
   Page.associate = function(models) {
-    // associations can be defined here
+    Page.hasMany(models.Page_Tags, {
+      foreignKey: "page_id",
+      as: "page_tags"
+    });
   };
   return Page;
 };

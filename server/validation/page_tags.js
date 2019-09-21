@@ -2,8 +2,7 @@ const Joi = require('joi');
 
 module.exports = (page_tags, update) => {
     let schema = Joi.object().keys({
-      name: Joi.string().required(),
-      page_id: Joi.number().required(),
+      name: Joi.string().required()
     });
 
     if(update) {
