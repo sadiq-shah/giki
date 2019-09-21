@@ -11,7 +11,10 @@ module.exports = (sequelize, DataTypes) => {
     }
   }, {});
   Page_Tags.associate = function(models) {
-    // associations can be defined here
+    Page_Tags.belongsTo(models.Page, {
+      foreignKey: "page_id",
+      as: "page_tags"
+    })
   };
   return Page_Tags;
 };

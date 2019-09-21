@@ -12,8 +12,14 @@ module.exports = {
         type: Sequelize.STRING
       },
       page_id: {
-        type: Sequelize.INTEGER
-      },
+        type: Sequelize.INTEGER,
+        onDelete: "CASCADE",
+        allowNull: false,
+        references: {
+          model: "Pages",
+          key: "id",
+        }
+    },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

@@ -5,7 +5,7 @@ const { methodNotAllowed } = require("./../functions/requests");
 
 Router.get("/", PageTagsController.list);
 Router.get("/:id", PageTagsController.retrieve);
-Router.post("/", auth, PageTagsController.create);
+Router.post("/", PageTagsController.create);
 Router.put("/:id", PageTagsController.update);
 Router.delete("/:id", PageTagsController.destroy);
 
