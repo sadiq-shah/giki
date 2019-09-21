@@ -7,6 +7,7 @@ const create = (req,res) => {
     const {error} = validate(req.body, false);
     if(error) return res.status(statusCodes.BAD_REQUEST).json({success: false, err: error.details[0].message});
 
+    req.body.page_tag_id = req.params.pageTagId;
     Article.create({
         ...req.body
     })
@@ -52,6 +53,7 @@ const update = (req,res) => {
     if(error) return res.status(statusCodes.BAD_REQUEST).json({success: false, err: error.details[0].message});
 
     const id = req.params.id;
+    req.body.page_tag_id = req.params.pageTagId;
     Article
     .findByPk(id)
     .then(article => {

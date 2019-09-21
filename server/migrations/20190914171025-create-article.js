@@ -15,8 +15,14 @@ module.exports = {
         type: Sequelize.TEXT
       },
       page_tag_id: {
-        type: Sequelize.INTEGER
-      },
+        type: Sequelize.INTEGER,
+        onDelete: "CASCADE",
+        allowNull: false,
+        references: {
+          model: "page_tags",
+          key: "id",
+        }
+    },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
