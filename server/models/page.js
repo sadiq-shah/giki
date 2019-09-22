@@ -21,6 +21,11 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
   Page.associate = function(models) {
     // associations can be defined here
+    Page.belongsToMany(models.User,{
+      foreignKey:'page_id',
+      through:'page_permissions',
+      as:'users'
+    })
   };
   return Page;
 };

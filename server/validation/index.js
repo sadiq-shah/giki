@@ -6,6 +6,8 @@ const Page = require("./page");
 const Page_Tags = require("./page_tags");
 const Article = require("./article");
 const Course = require("./course");
+const Role=require("./role");
+const Permission=require("./permission");
    
 module.exports = {
     Faculty,
@@ -15,5 +17,7 @@ module.exports = {
     Page,
     Page_Tags,
     Article,
-    Course
+    Course,
+    Role,
+    Permission
 }

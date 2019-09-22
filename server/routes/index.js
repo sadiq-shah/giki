@@ -9,4 +9,6 @@ module.exports = (app) => {
     app.use("/api/v1/page-tags", require("./page_tags"));
     app.use("/api/v1/article", require("./article"));
     app.use("/api/v1/course", require("./course"));
+    app.use("/api/v1/permission", require("./permission"));
+    app.use("/api/v1/role",require("./role"));
 };
