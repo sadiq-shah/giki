@@ -8,6 +8,7 @@ module.exports = (course, update) => {
       lecture_hours: Joi.number().required(),
       lab_hours: Joi.number().required(),
       credit_hours: Joi.number().required(),
+      faculty_id: Joi.number().required()
     });
 
     if(update) {

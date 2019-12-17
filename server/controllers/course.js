@@ -2,6 +2,9 @@ const Course = require("./../models").Course;
 const validate = require("./../validation").Course;
 const statusCodes = require("./../constants/statusCodes");
 const messages = require("./../constants/messages");
+const course_pre_req = require("./../models").course_pre_req;
+const course_co_req = require("./../models").course_co_req;
+
 
 const create = (req,res) => {
     const {error} = validate(req.body, false);
@@ -117,10 +120,51 @@ const destroy = (req,res) => {
     })
 }
 
+const retrieveCoursePreReqs = (req,res) => {
+    const id = req.params.id; 
+    console.log(`ID = ${id}`); 
+    Course
+    .findByPk(id, {
+        include: [{
+            model: course_pre_req,
+            as: "course_pre_req"
+        }]
+    })
+    .then(course_pre_reqs => {
+        console.log("Fail");
+        res.status(statusCodes.OK).json({success: true, data: course_pre_reqs});
+    })
+    .catch(err => {
+        console.log("Failedddddddddddddd");
+        res.status(statusCodes.BAD_REQUEST).json({success: false, err: err});
+    });  
+}
+const retrieveCourseCoReqs = (req,res) => {
+    const id = req.params.id; 
+    console.log(`ID = ${id}`); 
+    Course
+    .findByPk(id, {
+        include: [{
+            model: course_co_req,
+            as: "course_co_req"
+        }]
+    })
+    .then(course_co_reqs => {
+        console.log("Fail");
+        res.status(statusCodes.OK).json({success: true, data: course_co_reqs});
+    })
+    .catch(err => {
+        console.log("Failedddddddddddddd");
+        res.status(statusCodes.BAD_REQUEST).json({success: false, err: err});
+    });  
+}
+
 module.exports = {
     create,
     retrieve,
     list,
     update,
-    destroy
+    destroy,
+    retrieveCoursePreReqs,
+    retrieveCourseCoReqs
 }
