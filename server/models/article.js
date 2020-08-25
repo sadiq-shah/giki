@@ -18,7 +18,10 @@ module.exports = (sequelize, DataTypes) => {
     }
   }, {});
   Article.associate = function(models) {
-    // associations can be defined here
+    Article.belongsTo(models.Page_Tags, {
+      foreignKey: "page_tag_id",
+      as: "articles"
+    })
   };
   return Article;
 };
